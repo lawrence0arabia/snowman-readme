@@ -206,10 +206,15 @@ The ParentState(ABC) class defines 5 variables (as of v1.2.1). 2 dictionaries an
 Everything you do in Snowman boils down to manipulating these 5 objects.
 
 • `self.criteria` stores `key : value` pairs, which are used to craft a SNOW API GET request.
+
 • `self.contains_filters` stores `key : value` pairs for filtering results (searching for substrings in a key value).
+
 • `self.does_not_contain_filters`  also stores `key : value` pairs for filtering results (searching for substrings NOT in a key value).
+
 • `self.mods`  stores `key : value` pairs which are used to craft a SNOW API PUT request, changing values in VITs/VULs.
+
 • `self.results` stores search results as a list of VITs or VULs.
+
 
 Snowman has a variety of menus for the user to manipulate these objects. 
 
@@ -220,7 +225,9 @@ The Service Now API times out after roughly 4000 results, in my testing I found 
 
 #### Workarounds: 
 • Run multiple times. You can input the same JSON automation file multiple times as runtime arguments so you don't have to sit around waiting for it to execute. `python3 snowman.py file.json file.json file.json`
+
 • Get VULs first, then match them to their VITs. This splits up the API call into multiple smaller calls, BUT it takes ages (roughly 1 hour for 5000 VITs), and CANNOT BE DONE as an automation.
+
 • Change the config YAML directly to set a greater limit. Don't be surprised if it times out.
 
 ### Why do I keep getting error 403s when assigning VITs to a new VUL?
@@ -228,6 +235,7 @@ Only a fool would pretend to understand the inner machinations of the Service No
 
 # Tips & Tricks ✨
 • Want to see what changes you've made with Snowman? Check the LOGman.log file!
+
 • Want to see changes OTHERS have made using Snowman? Use the search criteria `sys_updated_by : YOUR_API_ACCOUNT_NAME`
 
 # Roadmap 🗺
@@ -235,17 +243,27 @@ Only a fool would pretend to understand the inner machinations of the Service No
 Some things coming in future versions of Snowman (no guarantees these all happen though)
 
 • Open source so others can use/develop Snowman ✅
+
 • Config file can be updated without exiting Snowman ✅
+
 • Ability to load multiple State Files for larger automations ✅
+
 • Group items into VUL ✅
+
     ◦ Handling to prevent SNOW from modifying the VUL (copy VUL values, do VIT move, modify VUL to original values) ✅
+
 • Animated splashcreen ASCII (lol)
+
 • VIT reassignment optimisations (building list of unique VULs to pull from to avoid some API calls)
+
 • Assignment group converted to name in digest (with optimisation to build match list instead of calling API every time)
 
 # Troubleshooting 💥
 
 • Make sure you are on the latest version of Python. This script has only been tested with Python 3.12, your mileage may vary with earlier Python releases. 
+
     ◦ DOES NOT WORK with Python versions less than 3.10.0
+
 • If you're having issues with certain operations, try enabling Debug Mode – This may give you additional information when an operation fails.
+
 • As of v1.0.0 Snowman is compatible with Windows, macOS and Linux. It has been tested with Windows 10, macOS Ventura 13.4.1, macOS Sonoma 14.2.1, and Fedora Linux 39.
